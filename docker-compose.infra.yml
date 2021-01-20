@@ -1,0 +1,29 @@
+version: '3.7'
+
+networks:
+  wto-data:
+    name: wto-data
+    driver: bridge
+
+services:
+
+#####################################################################
+#          Queues, Brokers, Logging, DB, Infra services, etc        #
+#####################################################################
+  postgresql:
+    container_name: postgresql-wto-data
+    image: "postgres:12.4"
+    hostname: "postgresql"
+    volumes:
+      - ${HOME}/wto-storage/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5222:5432"
+    environment:
+      - POSTGRES_HOST=localhost
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DBPARAMS="--lc-collate=C --template=template0 --lc-ctype=C"
+    restart: unless-stopped
+    networks:
+      - wto-data
+  
