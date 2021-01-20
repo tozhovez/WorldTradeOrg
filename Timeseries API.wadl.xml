@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 http://www.w3.org/Submission/wadl/wadl.xsd" xmlns="http://wadl.dev.java.net/2009/02">
+  <doc title="Timeseries API">WTO Data extraction API. You can use it to download in JSON or CSV format a larger data series or to integrate WTO Data into your web pages.&lt;br/&gt;Comma separated values are considered inclusive (logical OR).</doc>
+  <resources base="https://api.wto.org/timeseries/v1">
+    <resource path="/topics">
+      <doc title="05. Topics">List of topics grouping indicators.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of topics</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/frequencies">
+      <doc title="06. Frequencies">List of frequencies, for instance annual or monthly.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of frequencies</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/periods">
+      <doc title="07. Periods">List of time periods per frequencies, for instance January or Q1.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of periods</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/units">
+      <doc title="08. Units">Units of measurement in which datapoints are expressed, for instance USD. It includes the magnitude, such as millions.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of units</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/indicator_categories">
+      <doc title="09. Indicator categories">Categories for grouping indicators. They can contain subcategories.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of indicator categories</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/indicators">
+      <doc title="10. Indicators">List of indicators.</doc>
+      <method name="GET">
+        <request>
+          <param name="i" style="query" type="xs:string" default="all">
+            <doc>Indicator :&lt;ul&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i&gt;Indicator Code&lt;/i&gt; : Filter on one specific indicator&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="name" style="query" type="xs:string">
+            <doc>Indicator name (or part of the name)</doc>
+          </param>
+          <param name="t" style="query" type="xs:string" default="all">
+            <doc>Topics (comma separated ids). ```See Topics.```</doc>
+          </param>
+          <param name="pc" style="query" type="xs:string" default="all">
+            <doc>Product Classifications :&lt;ul&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt; : all classifications&lt;/li&gt;&lt;li&gt;&lt;i&gt;none&lt;/i&gt; : no product dimension&lt;/li&gt;&lt;li&gt;comma separated codes : ```See Classifications.```&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="tp" style="query" type="xs:string" default="all">
+            <doc>Trade partner :&lt;ul&gt;&lt;li&gt;&lt;i&gt;yes&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i&gt;no&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="frq" style="query" type="xs:string" default="all">
+            <doc>Frequency :&lt;ul&gt;&lt;li&gt;&lt;i&gt;A&lt;/i&gt; : annualy&lt;/li&gt;&lt;li&gt;&lt;i&gt;S&lt;/i&gt; : semiannualy&lt;/li&gt;&lt;li&gt;&lt;i&gt;Q&lt;/i&gt; : quarterly&lt;/li&gt;&lt;li&gt;&lt;i&gt;M&lt;/i&gt; : monthly&lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of indicators</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/territory/regions">
+      <doc title="11. Geographical regions">Geographical regions.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of geographical regions</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/territory/groups">
+      <doc title="12. Economic groups">Groups of territories that are not geographical.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of economic groups</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/reporters">
+      <doc title="13. Reporting economies">Territories reporting data.</doc>
+      <method name="GET">
+        <request>
+          <param name="name" style="query" type="xs:string">
+            <doc>Reporter name (or part of name)</doc>
+          </param>
+          <param name="ig" style="query" type="xs:string" default="all">
+            <doc>Individual / Group economies :&lt;ul&gt;&lt;li&gt;&lt;i&gt;individual&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i&gt;group&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="reg" style="query" type="xs:string" default="all">
+            <doc>Regions (comma separated codes). ```See Geographical regions.```</doc>
+          </param>
+          <param name="gp" style="query" type="xs:string" default="all">
+            <doc>Groups (comma separated codes). ```See Economic groups.```</doc>
+          </param>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of reporting economies</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/partners">
+      <doc title="14. Partner economies">Territories in the role of partners.</doc>
+      <method name="GET">
+        <request>
+          <param name="name" style="query" type="xs:string">
+            <doc>Reporter name (or part of name)</doc>
+          </param>
+          <param name="ig" style="query" type="xs:string" default="all">
+            <doc>Individual / Group economies :&lt;ul&gt;&lt;li&gt;&lt;i&gt;individual&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i&gt;group&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="reg" style="query" type="xs:string" default="all">
+            <doc>Regions (comma separated codes). ```See Geographical regions.```</doc>
+          </param>
+          <param name="gp" style="query" type="xs:string" default="all">
+            <doc>Groups (comma separated codes). ```See Economic groups.```</doc>
+          </param>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of partner economies</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/product_classifications">
+      <doc title="15. Classifications">Classifications.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of product/sector classifications</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/products">
+      <doc title="16. Products/sectors">Indicators cover goods (products) and services (sectors).</doc>
+      <method name="GET">
+        <request>
+          <param name="name" style="query" type="xs:string">
+            <doc>Product/sector name (or part of name)</doc>
+          </param>
+          <param name="pc" style="query" type="xs:string" default="all">
+            <doc>Product/sector Classifications (comma separated codes). ```See Classifications.```</doc>
+          </param>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of products/sectors</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>Validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/years">
+      <doc title="17. Years">Years for which datapoints exist.</doc>
+      <method name="GET">
+        <request />
+        <response status="200">
+          <doc>The list of years</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/value_flags">
+      <doc title="18. Value flags">Value flags are predefined metadata for values, such as estimation.</doc>
+      <method name="GET">
+        <request>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of value flags</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/data">
+      <doc title="01. Timeseries datapoints">Timeseries datapoints. If you reach the URL length limit, you can use the POST method.</doc>
+      <method name="GET">
+        <request>
+          <param name="i" style="query" type="xs:string" default="TP_A_0010" required="true">
+            <doc>Indicator code. ```See Indicators.```</doc>
+          </param>
+          <param name="r" style="query" type="xs:string" default="all">
+            <doc>Reporting economies (comma separated codes). ```See Reporting economies.```</doc>
+          </param>
+          <param name="p" style="query" type="xs:string" default="default">
+            <doc>Partner economies where applicable (comma separated codes). ```See Partner economies.```</doc>
+          </param>
+          <param name="ps" style="query" type="xs:string" default="default">
+            <doc>Time period :&lt;ul&gt;&lt;li&gt;&lt;i&gt;default&lt;/i&gt; : The last eight years are applied.
+            &lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt; : All years are applied.
+            &lt;/li&gt;&lt;li&gt;YYYY : comma separated list of years.
+            ```If the frequency of the requested indicator is monthly or quarterly, the resulting output will reflect this, e.g. 2010 will give an output of January-December or 2010Q1-Q4.```
+            &lt;/li&gt;&lt;li&gt;YYYYQn : comma separated list of year + quarter.
+            ```If the indicator frequency is monthly, the output will be given in months, e.g. 2010Q2 will produce an output of April, May, June.```
+            &lt;/li&gt;&lt;li&gt;YYYYMM : comma separated list of year + month.
+            ```e.g. 201007, 201507.```
+            &lt;/li&gt;&lt;li&gt;YYYY-YYYY : range of years.
+            ```e.g. 1995-2015.```
+            &lt;/li&gt;&lt;li&gt;YYYYQn-YYYYQn : range of quarters.
+            ```e.g. 2010Q1-2013Q3.```
+            &lt;/li&gt;&lt;li&gt;YYYYMM-YYYYMM : range of months.
+            ```e.g. 201501-201606.```
+            &lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="pc" style="query" type="xs:string" default="default">
+            <doc>Products/sectors (comma separated codes) where applicable. ```See Products/sectors.```&lt;ul&gt;&lt;li&gt;&lt;i&gt;default&lt;/i&gt; : includes all the product/sector codes &lt;u&gt;of the indicator's classification&lt;/u&gt; (except for &lt;i&gt;HS&lt;/i&gt; : includes all the top level 2-digit products + the whole chapter 01)&lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt; : includes all the product/sector codes &lt;u&gt;of the indicator's classification&lt;/u&gt;&lt;/li&gt;&lt;li&gt;HS2, HS4, HS6 : All HS codes at 2,4,6-digit level&lt;/li&gt;&lt;li&gt;AG,AGFOFI,MAIS,... : comma separated list of product codes&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="spc" style="query" type="xs:boolean" default="false">
+            <doc>Include sub products/sectors. If true, all child items in the product/sector hierarchy are recursively included.</doc>
+          </param>
+          <param name="fmt" style="query" type="xs:string" default="json">
+            <doc>Output format : &lt;ul&gt;&lt;li&gt;&lt;i&gt;json&lt;/i&gt; : json content is streamed&lt;/li&gt;&lt;li&gt;&lt;i&gt;csv&lt;/i&gt; : csv file is compressed and zipped&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="mode" style="query" type="xs:string" default="full">
+            <doc>Output mode : &lt;ul&gt;&lt;li&gt;&lt;i&gt;full&lt;/i&gt; : all columns, information repeated on each row&lt;/li&gt;&lt;li&gt;&lt;i&gt;codes&lt;/i&gt; : technical codes only&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="dec" style="query" type="xs:string" default="default">
+            <doc>Number of decimals : &lt;ul&gt;&lt;li&gt;&lt;i&gt;default&lt;/i&gt; : applies the default number of decimals for the Indicator&lt;/li&gt;&lt;li&gt;N : sets the number of decimals to N&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="off" style="query" type="xs:integer" default="0">
+            <doc>Number of records to skip (offset).&lt;br /&gt;You can use it for implementing pagination.</doc>
+          </param>
+          <param name="max" style="query" type="xs:integer" default="500">
+            <doc>Maximum number of records to return (limited to 1 000 000).</doc>
+          </param>
+          <param name="head" style="query" type="xs:string" default="H">
+            <doc>Heading style :&lt;ul&gt;&lt;li&gt;&lt;i&gt;H&lt;/i&gt; : human readable headings, including special characters and spaces&lt;/li&gt;&lt;li&gt;&lt;i&gt;M&lt;/i&gt; : machine readable headings, easy to parse&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="meta" style="query" type="xs:boolean" default="false">
+            <doc>Include Metadata information. If enabled, it will generate additional files/arrays (depending on the format, see parameter fmt) :&lt;ul&gt;&lt;li&gt;Metadata records&lt;/li&gt;&lt;li&gt;Request summary : number of data records retrieved, total number of data records, number of metadata records retrieved, start time, end time, duration in seconds&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The Json array or Zip file including data points. It also includes metadata and summary if parameter &lt;i&gt;Include Metadata&lt;/i&gt; is set to true.</doc>
+          <representation mediaType="application/json" />
+          <representation mediaType="application/zip" />
+        </response>
+        <response status="400">
+          <doc>Validation errors</doc>
+          <representation mediaType="application/json" />
+          <representation mediaType="application/zip" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/data">
+      <doc title="02. Timeseries datapoints">Timeseries datapoints.</doc>
+      <method name="POST">
+        <request>
+          <representation mediaType="application/json" />
+          <representation mediaType="text/json" />
+          <representation mediaType="application/*+json" />
+        </request>
+        <response status="200">
+          <doc>The Json array or Zip file including data/metadata/summary</doc>
+          <representation mediaType="application/json" />
+          <representation mediaType="application/zip" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+          <representation mediaType="application/zip" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/metadata">
+      <doc title="04. Timeseries metadata">Timeseries metadata.</doc>
+      <method name="GET">
+        <request>
+          <param name="i" style="query" type="xs:string" default="TP_A_0010" required="true">
+            <doc>Indicator code. ```See Indicators.```</doc>
+          </param>
+          <param name="r" style="query" type="xs:string" default="all">
+            <doc>Reporting economies (comma separated codes). ```See Reporting economies.```</doc>
+          </param>
+          <param name="p" style="query" type="xs:string" default="all">
+            <doc>Partner economies where applicable (comma separated codes). ```See Partner economies.```</doc>
+          </param>
+          <param name="pc" style="query" type="xs:string" default="all">
+            <doc>Products/sectors (comma separated codes) where applicable. ```See Products/sectors.```&lt;ul&gt;&lt;li&gt;&lt;i&gt;default&lt;/i&gt; : includes all the product/sectors codes &lt;u&gt;of the indicator's classification&lt;/u&gt; (except for &lt;i&gt;HS&lt;/i&gt; : Include all the top level 2 digit products + the whole chapter 01)&lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt; : includes all the product/sectors codes &lt;u&gt;of the indicator's classification&lt;/u&gt;&lt;/li&gt;&lt;li&gt;HS2, HS4, HS6 : All HS codes at 2,4,6 digit-level&lt;/li&gt;&lt;li&gt;AG,AGFOFI,MAIS,... : comma separated list of product codes&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="spc" style="query" type="xs:boolean" default="false">
+            <doc>Include sub products/sectors. If true, all child items in the product/sector hierarchy are recursively included.</doc>
+          </param>
+          <param name="lang" style="query" type="xs:integer" default="1">
+            <doc>Language id :&lt;ul&gt;&lt;li&gt;&lt;i&gt;1&lt;/i&gt; : English&lt;/li&gt;&lt;li&gt;&lt;i&gt;2&lt;/i&gt; : French&lt;/li&gt;&lt;li&gt;&lt;i&gt;3&lt;/i&gt; : Spanish&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>The list of metadata</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>The validation errors</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/data_count">
+      <doc title="03. Timeseries data count">Total number of data points.</doc>
+      <method name="GET">
+        <request>
+          <param name="i" style="query" type="xs:string" default="TP_A_0010" required="true">
+            <doc>Indicator code. ```See Indicators.```</doc>
+          </param>
+          <param name="r" style="query" type="xs:string" default="all">
+            <doc>Reporting economies (comma separated codes). ```See Reporting economies.```</doc>
+          </param>
+          <param name="p" style="query" type="xs:string" default="default">
+            <doc>Partner economies where applicable (comma separated codes). ```See Partner economies.```</doc>
+          </param>
+          <param name="ps" style="query" type="xs:string" default="default">
+            <doc>Time period :&lt;ul&gt;&lt;li&gt;&lt;i&gt;default&lt;/i&gt; : The last eight years will be applied.
+            &lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt; : All years are applied.
+            &lt;/li&gt;&lt;li&gt;YYYY : comma separated list of years.
+            ```If the frequency of the requested indicator is monthly or quarterly, the resulting output will reflect this, e.g. 2010 will give an output of January-December or 2010Q1-Q4.```
+            &lt;/li&gt;&lt;li&gt;YYYYQn : comma separated list of year + quarter.
+            ```If the indicator frequency is monthly, the output will be given in months, e.g. 2010Q2 will produce an output of April, May, June.```
+            &lt;/li&gt;&lt;li&gt;YYYYMM : comma separated list of year + month.
+            ```e.g. 201007, 201507.```
+            &lt;/li&gt;&lt;li&gt;YYYY-YYYY : range of years.
+            ```e.g. 1995-2015.```
+            &lt;/li&gt;&lt;li&gt;YYYYQn-YYYYQn : range of quarters.
+            ```e.g. 2010Q1-2013Q3.```
+            &lt;/li&gt;&lt;li&gt;YYYYMM-YYYYMM : range of months.
+            ```e.g. 201501-201606.```
+            &lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="pc" style="query" type="xs:string" default="default">
+            <doc>Products/sectors (comma separated codes) where applicable. ```See Products/sectors.```&lt;ul&gt;&lt;li&gt;&lt;i&gt;default&lt;/i&gt; : includes all the product/sector codes &lt;u&gt;of the indicator's classification&lt;/u&gt; (except for &lt;i&gt;HS&lt;/i&gt; : includes all the top level 2-digit products + the whole chapter 01)&lt;/li&gt;&lt;li&gt;&lt;i&gt;all&lt;/i&gt; : includes all the product/sector codes &lt;u&gt;of the indicator's classification&lt;/u&gt;&lt;/li&gt;&lt;li&gt;HS2, HS4, HS6 : All HS codes at 2,4,6-digit level&lt;/li&gt;&lt;li&gt;AG,AGFOFI,MAIS,... : comma separated list of product codes&lt;/li&gt;&lt;/ul&gt;</doc>
+          </param>
+          <param name="spc" style="query" type="xs:boolean" default="false">
+            <doc>Include sub products/sectors.</doc>
+          </param>
+        </request>
+        <response status="200">
+          <doc>Success</doc>
+          <representation mediaType="application/json" />
+        </response>
+        <response status="400">
+          <doc>Bad Request</doc>
+          <representation mediaType="application/json" />
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>
