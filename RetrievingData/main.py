@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
 
 import time
-from datetime import timedelta
 import json
-#from html.parser import HTMLParser
-import urllib
-import  urllib.error #, urllib.request, urllib.parse, urllib.error,
-
-from tornado import gen, httpclient, ioloop, queues
+from tornado import httpclient, ioloop
 from tornado.web import HTTPError
 from itertools import groupby
 import operator

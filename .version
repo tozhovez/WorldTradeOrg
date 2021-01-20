@@ -1,12 +1,2 @@
 0.0.1
-quarter=Third Quarter(average=1794.2666666666667)
-Done in 6 seconds, fetched 1 URL.
-quarter=Third Quarter(average=1794.2666666666667)
-On what year was the largest import of Travel services?
-RESULT: year=2019(max import=8154.0)
-Done in 1 seconds, fetched 1 URL.
-What is the import category with the lowest standard deviation?
-RESULT: import category=Memo item: Government goods and services n.i.e.(stdev=6.731138645520146)
-RESULT: import category=Memo item: Government goods and services n.i.e.(stdev=6.7311386455201445)
-
 

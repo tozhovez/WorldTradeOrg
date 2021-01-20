@@ -1,0 +1,14 @@
+RUNS_IN_DOCKER: -1
+POSTGRES_URL: postgres://docker:docker@localhost:5222/postgres
+POSTGRES_HOST: postgres://docker:docker@localhost:5222/
+POSTGRES_DB_URL: postgres://docker:docker@localhost:5222/wto-data
+
+POSTGRES_LOCALHOST: postgres://docker:docker@localhost:5222/wto-data
+DATA_STORAGE: wto-storage/data
+
+MAX_LINES: 97
+
+ZIP_INIT_DATA: archive.zip
+DIR_INIT_DATA: Infra/archive
+
+
