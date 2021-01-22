@@ -1,4 +1,5 @@
-
+DROP TABLE IF EXISTS "services";
+DROP TABLE IF EXISTS "periods";
 CREATE TABLE "public"."periods" (
     "PeriodCode" character varying(10) NOT NULL,
     "Period" character varying(50) NOT NULL,
@@ -744,106 +745,5 @@ INSERT INTO "wto_timeseries" ("ProductOrSectorCode", "PeriodCode", "Year", "Valu
 ('SPX4',	'Q2',	'2005',	0),
 ('SPX4',	'Q3',	'2005',	0),
 ('SPX4',	'Q4',	'2005',	0);
-;
 
 
-WITH get_transport("Period", "AVGVal")
-AS (
-    SELECT "Period", AVG("Value")
-    FROM "wto_timeseries"
-        JOIN "periods"
-        USING("PeriodCode")
-    WHERE "ProductOrSectorCode" IN (
-                                    SELECT "ProductOrSectorCode"
-                                    FROM "services"
-                                    WHERE "ProductOrSector" = 'Transport'
-                                    LIMIT 1
-                                    )
-    GROUP BY "Period"
-)
-SELECT "Period", "AVGVal"
-FROM "get_transport"
-WHERE "AVGVal" IN (
-                   SELECT MAx("AVGVal")
-                   FROM "get_transport"
-                   );
-
-
-;
-WITH get_travel("Year", "sumVal")
-AS (
-    SELECT "Year", SUM("Value")
-    FROM "wto_timeseries"
-    WHERE "ProductOrSectorCode" IN (
-                                    SELECT "ProductOrSectorCode"
-                                    FROM "services"
-                                    WHERE "ProductOrSector" = 'Travel'
-                                    LIMIT 1
-                                    )
-    GROUP BY "Year"
-)
-SELECT "Year", "sumVal"
-FROM "get_travel"
-WHERE "sumVal" IN (
-                   SELECT MAX("sumVal")
-                   FROM "get_travel"
-                   );
-
-
-WITH get_category("ProductOrSectorCode", "stddevVal")
-AS (
-    SELECT "ProductOrSectorCode", stddev_samp("Value")
-    FROM "wto_timeseries"
-    GROUP BY "ProductOrSectorCode"
-    HAVING stddev_samp("Value") > 0
-)
-
-SELECT "ProductOrSector" , "stddevVal"
-FROM  get_category JOIN "services"
-    USING("ProductOrSectorCode")
-WHERE "stddevVal" IN (
-                      SELECT MIN("stddevVal")
-                      FROM get_category
-                      );
-
-
-WITH get_data("yid", "pid", "pcid", "Year", "Period", "Value")
-AS (
-    SELECT  "Year" AS "yid", "PeriodCode" AS "pid", "ProductOrSectorCode" AS "pcid"
-            , "Year", "Period", "Value"
-    FROM "wto_timeseries"
-        JOIN "periods"
-        USING("PeriodCode")
-    WHERE "ProductOrSectorCode" IN (
-                                    SELECT "ProductOrSectorCode"
-                                    FROM "services"
-                                    WHERE "ProductOrSector" LIKE '%Telecommunications, computer, and information%'
-                                    LIMIT 1
-                                    )
-    ORDER BY "Year", "PeriodCode"
-),
-
-get_fillup AS (
-    SELECT  "yid", "pid", "pcid"
-            , ("Period"||' '||"Year")::text AS "nqp", "Value"
-            ,LAG("Value", 1, 0.0) OVER (PARTITION BY "pcid" ORDER BY "yid", "pid") AS "fillupValue"
-            ,"Value" - LAG("Value", 1, 0.0) OVER (PARTITION BY "pcid" ORDER BY "yid", "pid") > 0.0 AS "fillup"
-    FROM get_data
-),
-
-get_counts_groups AS(
-    SELECT  *
-            ,COUNT(*) FILTER (WHERE "fillup") OVER (PARTITION BY "pcid" ORDER BY "yid", "pid") AS "tank"
-            ,COUNT("fillup") FILTER (WHERE "Value" < "fillupValue") OVER (PARTITION BY "pcid" ORDER BY "yid", "pid") AS "ftank"
-    FROM get_fillup
-),
-consistent_increase AS(
-    SELECT  "ftank", COUNT("Value") AS "nvals"
-            ,STRING_AGG("nqp", ' , ') AS "c_q"
-            ,STRING_AGG("Value"::text , ', ') AS "vals"
-    FROM get_counts_groups
-    GROUP BY "ftank"
-    HAVING COUNT("Value") >= 3
-)
-SELECT "c_q" AS "Consecutive Quarters", "nvals" AS "number quarters", "vals" AS "Values"
-FROM consistent_increase;

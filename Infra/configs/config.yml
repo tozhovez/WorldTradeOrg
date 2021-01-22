@@ -2,13 +2,9 @@ RUNS_IN_DOCKER: -1
 POSTGRES_URL: postgres://docker:docker@localhost:5222/postgres
 POSTGRES_HOST: postgres://docker:docker@localhost:5222/
 POSTGRES_DB_URL: postgres://docker:docker@localhost:5222/wto-data
-
+URL_DATA_WTO_TIMESERIES: https://api.wto.org/timeseries/v1/data?i=ITS_CS_QM&r=376&p=000&ps=2005-2020&max=1000000&fmt=csv&mode=codes&head=M&lang=1&meta=false&subscription-key=c7eb2391404a459ba0e76d0e4f2631b3
 POSTGRES_LOCALHOST: postgres://docker:docker@localhost:5222/wto-data
-DATA_STORAGE: wto-storage/data
-
 MAX_LINES: 97
-
-ZIP_INIT_DATA: archive.zip
 DIR_INIT_DATA: Infra/archive
 
 
